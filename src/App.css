@@ -1,0 +1,129 @@
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  margin: 20px;
+}
+
+.header-row, .grid-row {
+  display: flex;
+}
+
+.header-cell, .grid-cell, .row-label {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: center;
+  min-width: 50px;
+}
+
+.header-cell {
+  background-color: #505050;
+  font-weight: bold;
+}
+
+.row-label {
+  font-weight: bold;
+  background-color: #0038b9;
+}
+
+.grid-cell {
+  background-color: #fff;
+}
+
+.grid-cell.active {
+  background-color: #065e00;
+}
+
+.grid-cell.provisioning {
+  background-color: #0031c5;
+}
+
+.grid-cell.idle {
+  background-color: #454545;
+}
+
+.header-row > .header-cell:first-child {
+  margin-left: 100px;
+}
+.grid-row > .row-label:first-child {
+  max-width: 100px;
+  
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  gap: 10px; 
+  width: 100vw;
+  max-width: 100vw; 
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  gap: 10px; 
+  width: 100%;
+  max-width: 400px; 
+}
+
+
+.controls input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.controls select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #000000;
+}
+
+
+.controls button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+.controls button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+
+.controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+.controls {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #000000;
+}
