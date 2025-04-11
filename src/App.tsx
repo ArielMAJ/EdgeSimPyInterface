@@ -9,7 +9,7 @@ function App() {
   const [timeSteps, setTimeSteps] = useState<string[]>([]);
   const [url, setUrl] = useState('');
   const [algorithm, setAlgorithm] = useState<Algorithm>('smms');
-  const [postData, loadingPost, postSimulationData] = usePost<ServiceData>('https://edge-sim-py-interface.vercel.app/simulation/services');
+  const [postData, loadingPost, postSimulationData] = usePost<ServiceData>('https://api.edgesimpy.artadevs.tech/simulation/services');
 
   const fetchData = async () => {
     try {
