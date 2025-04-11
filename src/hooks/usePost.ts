@@ -32,8 +32,12 @@ export const usePost = <T>(url: string, options?: RequestInit): [T | null, boole
             }
 
             setData(result);
-        } catch (error: any) {
-            setError(error.message || "An unknown error occurred");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError(error.message || "An unknown error occurred");
+            } else {
+                setError("An unknown error occurred");
+            }
             console.error(error);
         } finally {
             setLoading(false);

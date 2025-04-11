@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { usePost, Algorithm } from "./hooks/usePost";
 import { ServiceData, ServiceState } from "./types/service";
@@ -58,7 +58,7 @@ function App() {
       return;
     }
     toast.success("Simulation completed successfully!");
-  }, [loadingPost]);
+  }, [loadingPost, postData, postError]);
 
   return (
     <div className="container">
