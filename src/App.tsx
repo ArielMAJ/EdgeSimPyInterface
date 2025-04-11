@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import {usePost, Algorithm} from './hooks/usePost';
 import { ServiceData, ServiceState } from './types/service';

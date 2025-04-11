@@ -7,7 +7,7 @@ export type SimulationInput = {
     url_or_json: string | object;
 };
 
-export const usePost = <T = any>(url: string, options?: RequestInit): [T | null, boolean, (body: SimulationInput) => Promise<void>] => {
+export const usePost = <T>(url: string, options?: RequestInit): [T | null, boolean, (body: SimulationInput) => Promise<void>] => {
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
