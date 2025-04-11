@@ -1,21 +1,25 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import {usePost, Algorithm} from './hooks/usePost';
-import { ServiceData, ServiceState } from './types/service';
+import { use, useEffect, useState } from "react";
+import "./App.css";
+import { usePost, Algorithm } from "./hooks/usePost";
+import { ServiceData, ServiceState } from "./types/service";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 function App() {
-  const [gridData, setGridData] = useState<{ [key: number]: { [key: string]: ServiceState } }>({});
+  const [gridData, setGridData] = useState<{
+    [key: number]: { [key: string]: ServiceState };
+  }>({});
   const [allServices, setAllServices] = useState<string[]>([]);
   const [timeSteps, setTimeSteps] = useState<string[]>([]);
-  const [url, setUrl] = useState('');
-  const [algorithm, setAlgorithm] = useState<Algorithm>('smms');
-  const [postData, loadingPost, postSimulationData] = usePost<ServiceData>('https://api.edgesimpy.artadevs.tech/simulation/services');
+  const [url, setUrl] = useState("");
+  const [algorithm, setAlgorithm] = useState<Algorithm>("smms");
+  const [postData, loadingPost, postError, postSimulationData] =
+    usePost<ServiceData>("http://localhost:3000/simulation/services");
 
   const fetchData = async () => {
     try {
       await postSimulationData({ algorithm, url_or_json: url });
     } catch (error) {
-      console.error('Erro ao buscar dados:', error);
+      console.error("Erro ao buscar dados:", error);
     }
   };
 
@@ -24,7 +28,7 @@ function App() {
       const grouped: { [key: number]: { [key: string]: ServiceState } } = {};
       const servicesSet: Set<string> = new Set();
 
-      postData.Service.forEach(item => {
+      postData.Service.forEach((item) => {
         const time = Number(item["Time Step"]);
         if (!grouped[time]) grouped[time] = {};
         grouped[time][item.Object] = item;
@@ -37,8 +41,40 @@ function App() {
     }
   }, [postData]);
 
+  useEffect(() => {
+    console.log(loadingPost, postData, postError);
+    if (loadingPost) {
+      return;
+    }
+    if (!postData) {
+      return;
+    }
+
+    if (postError) {
+      toast.error(postError);
+      setGridData({});
+      setTimeSteps([]);
+      setAllServices([]);
+      return;
+    }
+    toast.success("Simulation completed successfully!");
+  }, [loadingPost]);
+
   return (
-    <div className='container'>
+    <div className="container">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
       <div className="controls">
         <input
           type="text"
@@ -54,7 +90,7 @@ function App() {
           <option value="thea">Thea</option>
         </select>
         <button onClick={fetchData} disabled={loadingPost}>
-          {loadingPost ? 'Loading...' : 'Run Simulation'}
+          {loadingPost ? "Loading..." : "Run Simulation"}
         </button>
       </div>
 
@@ -63,15 +99,17 @@ function App() {
       ) : (
         <div className="grid-container">
           <div className="header-row">
-            {timeSteps.map(step => (
-              <div className="header-cell" key={step}>T{step}</div>
+            {timeSteps.map((step) => (
+              <div className="header-cell" key={step}>
+                T{step}
+              </div>
             ))}
           </div>
 
-          {allServices.map(service => (
+          {allServices.map((service) => (
             <div className="grid-row" key={service}>
               <div className="row-label">{service}</div>
-              {timeSteps.map(step => {
+              {timeSteps.map((step) => {
                 const data = gridData[Number(step)]?.[service];
                 return (
                   <div
@@ -84,7 +122,11 @@ function App() {
                         : "idle"
                     }`}
                   >
-                    {data?.Server ? `S${data.Server}` : data?.["Being Provisioned"] ? 'Prov' : '—'}
+                    {data?.Server
+                      ? `S${data.Server}`
+                      : data?.["Being Provisioned"]
+                      ? "Prov"
+                      : "—"}
                   </div>
                 );
               })}
