@@ -13,7 +13,7 @@ function App() {
   const [url, setUrl] = useState("");
   const [algorithm, setAlgorithm] = useState<Algorithm>("smms");
   const [postData, loadingPost, postError, postSimulationData] =
-    usePost<ServiceData>("http://localhost:3000/simulation/services");
+    usePost<ServiceData>("https://api.edgesimpy.artadevs.tech/simulation/services");
 
   const fetchData = async () => {
     try {
